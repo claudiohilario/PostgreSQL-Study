@@ -10,3 +10,8 @@ sudo systemctl status postgresql-10
 sudo su - postgres
 -bash-4.2$ psql
 ```
+## Utilizando o Docker
+```cli
+docker pull postgres
+docker run -p 5432:5432 postgres
+```
