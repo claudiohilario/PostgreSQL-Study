@@ -15,3 +15,13 @@ sudo su - postgres
 docker pull postgres
 docker run -p 5432:5432 postgres
 ```
+
+## Group by time example
+
+```sql
+select
+  date_trunc('minute', created_at), -- or hour, day, week, month, year
+  count(1)
+from users
+group by 1
+```
