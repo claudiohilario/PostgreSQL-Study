@@ -25,3 +25,18 @@ select
 from users
 group by 1
 ```
+
+## Last sessions action example
+
+```sql
+SELECT DISTINCT ON (session_uuid) 
+    session_uuid,
+    session_action,
+    user_uuid,
+    created_at
+FROM
+    sessions s
+ORDER BY 
+    session_uuid, created_at DESC ;
+
+```
