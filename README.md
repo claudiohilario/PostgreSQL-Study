@@ -40,3 +40,31 @@ ORDER BY
     session_uuid, created_at DESC ;
 
 ```
+
+# Example try_cast function
+```sql
+create function try_cast_int(p_in text, p_default int default null)
+   returns int
+as
+$$
+begin
+  begin
+    return $1::int;
+  exception 
+    when others then
+       return p_default;
+  end;
+end;
+$$
+language plpgsql;
+
+--example
+select try_cast_int('999'), try_cast_int('xpto', -1000), try_cast_int('xxxx')
+```
+
+# Example data random
+```sql
+create table t_random as select s, md5(random()::text) from generate_Series(1,3000000) s;
+EXPLAIN ANALYZE select try_cast_int(tr.md5, 1) from t_random tr;
+
+```
