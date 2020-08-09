@@ -90,3 +90,14 @@ group by
 order by
 	day;
 ```
+
+# Insert 6000000 data rows example
+
+```sql
+INSERT INTO table_name(column_uuid, date, active, dynamic_id)
+SELECT 'C1040D72-C94A-4843-AA0D-76323A265303' AS column_uuid,
+       '2020-07-10' AS date,
+       TRUE AS active,
+               FLOOR(1000 + RANDOM() * 8999) AS dynamic_id
+FROM GENERATE_SERIES(1, 6000000);
+```
