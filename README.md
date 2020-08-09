@@ -68,3 +68,25 @@ create table t_random as select s, md5(random()::text) from generate_Series(1,30
 EXPLAIN ANALYZE select try_cast_int(tr.md5, 1) from t_random tr;
 
 ```
+
+# Example group by year, month and day
+
+```sql
+select
+	to_char(date_trunc('year', payment_date), 'YYYY') as year,
+	to_char(date_trunc('month', payment_date), 'MM') as month,
+	to_char(date_trunc('day', payment_date), 'DD') as day,
+	avg(payment.amount) as amount
+from
+	payment
+where
+	customer_id = 1 and
+	extract(month FROM payment_date) = 3 and
+	extract(year from payment_date) = 2007
+group by
+	year,
+	month,
+	day
+order by
+	day;
+```
